@@ -16,6 +16,9 @@ class RAGSearch:
         if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
             from data_loader import load_all_documents
             docs = load_all_documents(data_dir)
+            if not docs:
+                print(f"[ERROR] No documents found in the data directory: {data_dir}")
+                sys.exit(1)
             self.vectorstore.build_from_documents(docs)
         else:
             self.vectorstore.load()
